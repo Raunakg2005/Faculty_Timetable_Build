@@ -4,8 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   // Production API endpoint
-  static const String baseUrl = 'https://faculty-api.quantyxio.cloud/api'; 
-
+  static const String baseUrl = 'https://faculty-api.quantyxio.cloud/api';
   static Future<Map<String, String>> getHeaders() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token'); // If we had JWT, we'd use it here
