@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: faculty-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: teach_platform
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - faculty-network
+
+  # Node.js API
+  api:
+    image: warlord9004/faculty-timetable-api:latest
+    container_name: faculty-api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      MONGODB_URI: mongodb://mongodb:27017/teach_platform
+      NODE_ENV: production
+    depends_on:
+      - mongodb
+    networks:
+      - faculty-network
+
+volumes:
+  mongodb_data:
+
+
+networks:
+  faculty-network:
+    driver: bridge
